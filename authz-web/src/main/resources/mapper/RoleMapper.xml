@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.imyu.authz.web.dao.RoleDao">
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="me.imyu.authz.web.model.Role">
+        SELECT a.id, a.code, a.name, a.description
+        FROM oauth_role a, oauth_user_role b
+        WHERE a.id = b.role_id AND b.user_id = #{userId}
+    </select>
+
+    <select id="selectResourceByUserId" parameterType="java.lang.Long" resultType="me.imyu.authz.web.model.Resource">
+        SELECT a.id, a.code, a.name, a.description
+        FROM oauth_resource a, oauth_role_resource b, oauth_user_role c
+        WHERE a.id = b.resource_id AND b.role_id = c.role_id AND c.user_id = #{userId}
+    </select>
+</mapper>

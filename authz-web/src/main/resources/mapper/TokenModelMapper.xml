@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.imyu.authz.web.dao.TokenModelDao">
+    <insert id="insert" parameterType="me.imyu.authz.web.model.TokenModel">
+        INSERT INTO oauth_token (user_id, username, access_token, refresh_token, create_at, expire_at, refresh_expire_at)
+        VALUES (#{userId}, #{username}, #{accessToken}, #{refreshToken}, #{createAt}, #{expireAt}, #{refreshExpireAt})
+    </insert>
+    <delete id="deleteByUsername" parameterType="java.lang.String">
+        DELETE FROM oauth_token WHERE username = #{username}
+    </delete>
+    <select id="selectByAccessToken" parameterType="java.lang.String" resultType="me.imyu.authz.web.model.TokenModel">
+        SELECT id, user_id userId, username, access_token accessToken, refresh_token refreshToken, create_at createAt,
+        expire_at expireAt, refresh_expire_at refreshExpireAt
+        FROM oauth_token
+        WHERE access_token = #{accessToken}
+    </select>
+</mapper>
